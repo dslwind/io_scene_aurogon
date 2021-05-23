@@ -1,0 +1,18 @@
+https://github.com/microsoft/DirectXTex
+
+
+May 10, 2020
+@walbourn walbourn released this 11 days ago · 4 commits to master since this release
+
+HDR (RGBE Radiance) file format writer updated to accept half16 input
+Code cleanup
+Updated D3DX12 internal copy to Windows 10 SDK (19041) version
+texassemble, texconv, texdiag: Updated with -l switch for case-sensitive file systems
+texconv: Added -dx9 switch to force legacy compatible DDS files
+texconv: Collapsed -bcuniform, -bcdither, -bcquick, and -bcmax into one -bc switch
+Updates to DDSTextureLoader, ScreenGrab, and WICTextureLoader including new DX9 version
+This version is also available on NuGet as version 2020.5.11
+
+Windows desktop app using VS 2017 or VS 2019
+Windows desktop app using VS 2017 or VS 2019 for Windows 10 / DX 12
+Universal Windows Platform apps using VS 2017 or VS 2019
