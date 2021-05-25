@@ -5,7 +5,6 @@ from . import aurogon_type, binary_analysis
 
 
 class 解析():
-
     def __init__(self, file_path):
         self.__file_path = file_path
         self.__数据准备()
@@ -123,8 +122,8 @@ class 解析():
             网格.总网格ID = 总网格ID
             网格.名称 = self.__file_name + "_" + str(总网格ID) + "_" + str(j)
             网格.顶点个数 = vert索引个数
-            网格.顶点位置列表 = 总网格.顶点位置列表[vert索引左值: vert索引左值 + vert索引个数]
-            网格.顶点UV列表 = 总网格.顶点UV列表[vert索引左值: vert索引左值 + vert索引个数]
+            网格.顶点位置列表 = 总网格.顶点位置列表[vert索引左值:vert索引左值 + vert索引个数]
+            网格.顶点UV列表 = 总网格.顶点UV列表[vert索引左值:vert索引左值 + vert索引个数]
             try:
                 网格.材质 = self.__材质列表[材质索引]
             except Exception as e:
@@ -138,7 +137,7 @@ class 解析():
             vert索引左值 += vert索引个数
             网格.Loop总数 = loop总数
             网格.Loop列表 = bp.readuint32s(loop总数)
-            网格.三角面数 = int(loop总数/3)
+            网格.三角面数 = int(loop总数 / 3)
             self.烛龙文件.网格列表.append(网格)
             BoneMap = bp.readuint32s(骨骼总数)
 
@@ -165,7 +164,7 @@ class 解析():
             顶点权重 = aurogon_type.烛龙顶点权重()
             顶点权重.顶点ID = i
             权重索引左值, 权重数 = 权重索引左值_权重数_列表[ID]
-            顶点权重.骨骼ID和权重值列表 = 权重列表[权重索引左值: 权重索引左值 + 权重数]
+            顶点权重.骨骼ID和权重值列表 = 权重列表[权重索引左值:权重索引左值 + 权重数]
             对应总网格.顶点权重列表.append(顶点权重)
 
         # 将权重分配给每个网格
@@ -173,7 +172,7 @@ class 解析():
         for 网格 in self.烛龙文件.网格列表:
             if 网格.总网格ID == 总网格ID:
                 end = 网格.顶点个数 + start
-                网格.顶点权重列表 = 对应总网格.顶点权重列表[start: end]
+                网格.顶点权重列表 = 对应总网格.顶点权重列表[start:end]
 
                 for 骨骼 in self.烛龙文件.骨架.骨骼列表:
                     顶点组 = aurogon_type.烛龙顶点组()
@@ -186,8 +185,8 @@ class 解析():
                         骨骼ID, 权重值 = 骨骼ID_权重值.骨骼ID, 骨骼ID_权重值.权重值
                         顶点组 = 网格.顶点组列表[骨骼ID]
                         顶点ID_权重值 = aurogon_type.烛龙顶点ID和权重值()
-                        顶点ID_权重值.顶点ID, 顶点ID_权重值.权重值 = int(
-                            顶点权重.顶点ID - start), 权重值
+                        顶点ID_权重值.顶点ID, 顶点ID_权重值.权重值 = int(顶点权重.顶点ID -
+                                                          start), 权重值
                         顶点组.顶点ID和权重值列表.append(顶点ID_权重值)
 
                 start = end
@@ -211,7 +210,7 @@ class 解析():
 
                 bvec = mathutils.Vector([0, 0, 0]) - 骨骼.头位置
                 bvec.normalize()
-                骨骼.尾位置 = 骨骼.头位置 + 1.5*bvec
+                骨骼.尾位置 = 骨骼.头位置 + 1.5 * bvec
 
         # UV, Y轴镜像
         for 网格 in self.烛龙文件.网格列表:

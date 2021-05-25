@@ -28,6 +28,8 @@ class 烛龙骨骼:
 class 烛龙骨架:
     名称: str = ""
     骨骼列表: list = field(default_factory=list)
+
+
 # 约定，仅有骨架名称来源于文件名称与文件名称一致。在blender导入中，使用骨架名称，不使用文件名称。
 
 
@@ -83,6 +85,7 @@ class 烛龙网格:
     骨骼ID列表: list = field(default_factory=list)
     权重值索引列表: list = field(default_factory=list)
     权重值列表: list = field(default_factory=list)
+
 
 # @dataclass
 # class 烛龙对象:

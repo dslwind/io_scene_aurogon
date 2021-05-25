@@ -1,4 +1,5 @@
 import os
+
 import numpy as np
 
 
@@ -6,8 +7,8 @@ class Analy():
     def __init__(self, variable=1, little=True):
         self.__little = little
         if type(variable) == str:
-            self.uint8list = np.fromfile(
-                variable, dtype=np.uint8)  # numpy1.17版本新增功能
+            self.uint8list = np.fromfile(variable,
+                                         dtype=np.uint8)  # numpy1.17版本新增功能
         elif type(variable) == bytes:
             self.uint8list = np.fromfile(variable, dtype=np.uint8)
         elif type(variable) == np.ndarray and variable.dtype == np.uint8:
@@ -16,7 +17,8 @@ class Analy():
             self.uint8list = np.asarray(variable, dtype=np.uint8)
         else:
             print(
-                "Union[str , bytes , numpy.ndarray(dtype=numpy.uint8) , list[->numpy.ndarray(dtype=numpy.uint8)].")
+                "Union[str , bytes , numpy.ndarray(dtype=numpy.uint8) , list[->numpy.ndarray(dtype=numpy.uint8)]."
+            )
             传入的类型 = type(variable)
             # python3.8才支持字符串f增强，blender28目前是python3.7
             print("Binary Analysis Error：传入的类型({传入的类型=})未支持!")
@@ -27,9 +29,23 @@ class Analy():
             self.endian = ">"
         self._currut = 0
         self._size = len(self.uint8list)
-        self.__fmt_step = {"b": 1, "B": 1, "h": 2, "H": 2, "i": 4, "I": 4, "q": 8, "Q": 8,
-                           "f2": 2, "f4": 4, "f8": 8, "F4": 8, "F8": 16, "a": 1, "U": 2,
-                           }
+        self.__fmt_step = {
+            "b": 1,
+            "B": 1,
+            "h": 2,
+            "H": 2,
+            "i": 4,
+            "I": 4,
+            "q": 8,
+            "Q": 8,
+            "f2": 2,
+            "f4": 4,
+            "f8": 8,
+            "F4": 8,
+            "F8": 16,
+            "a": 1,
+            "U": 2,
+        }
         self.__equalfunc()
 
     def check(self, num, fmt=""):
@@ -80,20 +96,20 @@ class Analy():
         return list(uint8list)
 
     def read(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += num
         return uint8list
 
     def readslice(self, num):
         """返回1个Analy类的类似列表切片的实例对象，请注意命名区分。"""
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += num
         instance = Analy(uint8list, self.__little)
         return instance
 
     def readfmt(self, var):
         if type(var) == int:
-            uint8list = self.uint8list[self._currut: self._currut + var]
+            uint8list = self.uint8list[self._currut:self._currut + var]
             self._currut += var
             return uint8list
         elif type(var) == str:
@@ -104,13 +120,13 @@ class Analy():
 
     def readslice(self, num):
         """返回1个Analy类的类似列表切片的实例对象，请注意命名区分。"""
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += num
         instance = Analy(uint8list, self.__little)
         return instance
 
     def readlist(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += num
         return list(uint8list)
 
@@ -123,119 +139,119 @@ class Analy():
         return list(self.uint8list)
 
     def readuint8s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += num
         return list(uint8list)
 
     def readuint8(self):
-        uint8list = self.uint8list[self._currut: self._currut + 1]
+        uint8list = self.uint8list[self._currut:self._currut + 1]
         self._currut += 1
         return list(uint8list)[0]
 
     def readint8s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += num
         return list(np.frombuffer(uint8list, dtype=self.endian + "b"))
 
     def readint8(self):
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += 1
         return list(np.frombuffer(uint8list, dtype=self.endian + "b"))[0]
 
     def readuint16s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 2*num]
-        self._currut += 2*num
+        uint8list = self.uint8list[self._currut:self._currut + 2 * num]
+        self._currut += 2 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "H"))
 
     def readuint16(self):
-        uint8list = self.uint8list[self._currut: self._currut + 2]
+        uint8list = self.uint8list[self._currut:self._currut + 2]
         self._currut += 2
         return list(np.frombuffer(uint8list, dtype=self.endian + "H"))[0]
 
     def readint16s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 2*num]
-        self._currut += 2*num
+        uint8list = self.uint8list[self._currut:self._currut + 2 * num]
+        self._currut += 2 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "h"))
 
     def readint16(self):
-        uint8list = self.uint8list[self._currut: self._currut + 2]
+        uint8list = self.uint8list[self._currut:self._currut + 2]
         self._currut += 2
         return list(np.frombuffer(uint8list, dtype=self.endian + "h"))[0]
 
     def readuint32s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 4*num]
-        self._currut += 4*num
+        uint8list = self.uint8list[self._currut:self._currut + 4 * num]
+        self._currut += 4 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "I"))
 
     def readuint32(self):
-        uint8list = self.uint8list[self._currut: self._currut + 4]
+        uint8list = self.uint8list[self._currut:self._currut + 4]
         self._currut += 4
         return list(np.frombuffer(uint8list, dtype=self.endian + "I"))[0]
 
     def readint32s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 4*num]
-        self._currut += 4*num
+        uint8list = self.uint8list[self._currut:self._currut + 4 * num]
+        self._currut += 4 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "i"))
 
     def readint32(self):
-        uint8list = self.uint8list[self._currut: self._currut + 4]
+        uint8list = self.uint8list[self._currut:self._currut + 4]
         self._currut += 4
         return list(np.frombuffer(uint8list, dtype=self.endian + "i"))[0]
 
     def readuint64s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 8*num]
-        self._currut += 8*num
+        uint8list = self.uint8list[self._currut:self._currut + 8 * num]
+        self._currut += 8 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "Q"))
 
     def readuint64(self):
-        uint8list = self.uint8list[self._currut: self._currut + 8]
+        uint8list = self.uint8list[self._currut:self._currut + 8]
         self._currut += 8
         return list(np.frombuffer(uint8list, dtype=self.endian + "Q"))[0]
 
     def readint64s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 8*num]
-        self._currut += 8*num
+        uint8list = self.uint8list[self._currut:self._currut + 8 * num]
+        self._currut += 8 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "q"))
 
     def readint64(self):
-        uint8list = self.uint8list[self._currut: self._currut + 8]
+        uint8list = self.uint8list[self._currut:self._currut + 8]
         self._currut += 8
         return list(np.frombuffer(uint8list, dtype=self.endian + "q"))[0]
 
     def readfloat16s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 2*num]
-        self._currut += 2*num
+        uint8list = self.uint8list[self._currut:self._currut + 2 * num]
+        self._currut += 2 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "f2"))
 
     def readfloat16(self):
-        uint8list = self.uint8list[self._currut: self._currut + 2]
+        uint8list = self.uint8list[self._currut:self._currut + 2]
         self._currut += 2
         return list(np.frombuffer(uint8list, dtype=self.endian + "f2"))[0]
 
     def readfloat32s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 4*num]
-        self._currut += 4*num
+        uint8list = self.uint8list[self._currut:self._currut + 4 * num]
+        self._currut += 4 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "f4"))
 
     def readfloat32(self):
-        uint8list = self.uint8list[self._currut: self._currut + 4]
+        uint8list = self.uint8list[self._currut:self._currut + 4]
         self._currut += 4
         return list(np.frombuffer(uint8list, dtype=self.endian + "f4"))[0]
 
     def readfloat64s(self, num):
-        uint8list = self.uint8list[self._currut: self._currut + 8*num]
-        self._currut += 8*num
+        uint8list = self.uint8list[self._currut:self._currut + 8 * num]
+        self._currut += 8 * num
         return list(np.frombuffer(uint8list, dtype=self.endian + "f8"))
 
     def readfloat64(self):
-        uint8list = self.uint8list[self._currut: self._currut + 8]
+        uint8list = self.uint8list[self._currut:self._currut + 8]
         self._currut += 8
         return list(np.frombuffer(uint8list, dtype=self.endian + "f8"))[0]
 
     def readstr(self, num):
         if num <= 0:
             return ""
-        uint8list = self.uint8list[self._currut: self._currut + num]
+        uint8list = self.uint8list[self._currut:self._currut + num]
         self._currut += num
         chars = np.frombuffer(uint8list, dtype=self.endian + "a" + str(num))[0]
         return chars.decode()
@@ -301,4 +317,6 @@ class Analy():
             else:
                 textures_folder = ""
         return textures_folder
+
+
 # 约定，读取个数的出错判断在上层，不在本文件。后续看情况再调整。

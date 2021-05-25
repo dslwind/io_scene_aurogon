@@ -29,14 +29,14 @@
 # nif仅支持古剑1 Gamebryo nif 2.6.0.0版本，其他nif版本不支持。（注：当前版本未支持）
 
 bl_info = {
-    "name": "烛龙类型数据文件导入插件",
+    "name":
+    "烛龙类型数据文件导入插件",
     "author": "AnsWdy RuiDing",
     "version": (1, 0, 9),
     "blender": (2, 80, 0),
     "location": "File > Import-Export",
-    "description": "Import nif, kf, xac, xsm, vmesh and model。Import 烛龙类型 de mesh, UV, materials, textures，and animations",
-    }
-
+    "description": "Import nif, kf, xac, xsm, vmesh and model. Import 烛龙类型 mesh, UV, materials, textures，and animations",
+}
 
 import bpy
 
@@ -46,21 +46,24 @@ if "bpy" in locals():
     if "Blender28UI" in locals():
         importlib.reload(Blender28UI)
 
-
 from . import Blender28UI
 # 类别名，也许需要注意2个py的import语句要一致
-烛龙类型Impoter=Blender28UI.导入器
+烛龙类型Impoter = Blender28UI.导入器
+
 
 # 注册菜单的前置函数
 def menu_func_import(self, context):
-    self.layout.operator(烛龙类型Impoter.bl_idname, text="烛龙文件 (.model/.xac/.nif/.xsm......)")
+    self.layout.operator(烛龙类型Impoter.bl_idname,
+                         text="烛龙文件 (.model/.xac/.nif/.xsm......)")
+
 
 # 启用插件时候执行
-def register(): # 在blender插件界面，勾选插件时执行。勾选后，每次blender启动时执行
+def register():  # 在blender插件界面，勾选插件时执行。勾选后，每次blender启动时执行
     # 注册类
     bpy.utils.register_class(烛龙类型Impoter)
     # 注册菜单
     bpy.types.TOPBAR_MT_file_import.append(menu_func_import)
+
 
 # 取消插件时候执行
 def unregister():

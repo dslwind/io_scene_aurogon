@@ -6,7 +6,6 @@ from . import binary_analysis
 
 
 class 解析():
-
     def __init__(self, file_path):
         self.__file_path = file_path
         self.__数据准备()  # 实例化烛龙类型，建立1套骨架等
@@ -64,7 +63,7 @@ class 解析():
             vertsize = vertnum * flag
             loopsize = bp.remain() - vertsize - 28
             顶点区, Loop区 = bp.readslice(vertsize), bp.readslice(loopsize)
-            if int(flag/4) % 2 == 1:
+            if int(flag / 4) % 2 == 1:
                 for i in range(vertnum):
                     bc = 顶点区.readslice(flag)
                     网格.顶点位置列表.append(bc.readfloat32s(3))
@@ -84,7 +83,7 @@ class 解析():
             vertsize = vertnum * flag
             loopsize = bp.remain() - vertsize - 28
             顶点区, Loop区 = bp.readslice(vertsize), bp.readslice(loopsize)
-            if int(flag/4) % 2 == 1:
+            if int(flag / 4) % 2 == 1:
                 for i in range(vertnum):
                     bc = 顶点区.readslice(flag)
                     网格.顶点位置列表.append(bc.readfloat32s(3))
@@ -99,13 +98,13 @@ class 解析():
                     网格.顶点UV列表.append(bc.readfloat32s(2))
 
         if vertnum <= 65535:
-            网格.Loop总数 = int(loopsize/2)
+            网格.Loop总数 = int(loopsize / 2)
             网格.Loop列表 = Loop区.readuint16s(网格.Loop总数)
         else:
-            网格.Loop总数 = int(loopsize/4)
+            网格.Loop总数 = int(loopsize / 4)
             网格.Loop列表 = Loop区.readuint32s(网格.Loop总数)
 
-        网格.三角面数 = int(网格.Loop总数/3)
+        网格.三角面数 = int(网格.Loop总数 / 3)
         self.__总网格 = 网格
 
     def __SRTM解析(self, bp):
@@ -172,11 +171,11 @@ class 解析():
             网格 = aurogon_type.烛龙网格()
             网格.名称 = self.__file_name + "_" + str(j)
             网格.顶点个数 = vert索引个数
-            网格.顶点位置列表 = self.__总网格.顶点位置列表[vert索引左值: vert索引左值 + vert索引个数]
-            网格.顶点UV列表 = self.__总网格.顶点UV列表[vert索引左值: vert索引左值 + vert索引个数]
+            网格.顶点位置列表 = self.__总网格.顶点位置列表[vert索引左值:vert索引左值 + vert索引个数]
+            网格.顶点UV列表 = self.__总网格.顶点UV列表[vert索引左值:vert索引左值 + vert索引个数]
             网格.Loop总数 = loop索引个数
-            网格.三角面数 = int(loop索引个数/3)
-            网格.Loop列表 = self.__总网格.Loop列表[loop索引左值: loop索引左值 + loop索引个数]
+            网格.三角面数 = int(loop索引个数 / 3)
+            网格.Loop列表 = self.__总网格.Loop列表[loop索引左值:loop索引左值 + loop索引个数]
 
             for i in range(网格.Loop总数):
                 网格.Loop列表[i] -= vert索引左值
@@ -246,7 +245,8 @@ class 解析():
             权重个数 = bp.readuint16()
             for j in range(权重个数):
                 骨骼ID和权重值 = aurogon_type.烛龙骨骼ID和权重值()
-                骨骼ID和权重值.骨骼ID, 骨骼ID和权重值.权重值 = bp.readuint16(), bp.readuint16() * 2**-15
+                骨骼ID和权重值.骨骼ID, 骨骼ID和权重值.权重值 = bp.readuint16(
+                ), bp.readuint16() * 2**-15
                 顶点权重.骨骼ID和权重值列表.append(骨骼ID和权重值)
             self.__总网格.顶点权重列表.append(顶点权重)
 
@@ -295,7 +295,7 @@ class 解析():
         start = 0
         for 网格 in self.烛龙文件.网格列表:
             end = 网格.顶点个数 + start
-            网格.顶点权重列表 = self.__总网格.顶点权重列表[start: end]
+            网格.顶点权重列表 = self.__总网格.顶点权重列表[start:end]
 
             for 骨骼 in self.烛龙文件.骨架.骨骼列表:
                 顶点组 = aurogon_type.烛龙顶点组()

@@ -22,7 +22,6 @@ if __name__ == "__main__":
     # print("转换器", 转换器)
     file_path = "E:\\Unpack_Files\\Gujian3_old\\asset\\characters\\actress2\\textures\\actress2_bx_body_01d.dds"
     convert(file_path)
-
     """
     Usage: texconv <options> <files>
 

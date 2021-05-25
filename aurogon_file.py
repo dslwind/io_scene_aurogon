@@ -7,7 +7,6 @@ from . import blender28libs
 
 class 解析器(object):
     """判断文件格式,调用各自的解析函数。解析完成后，调用blender导入函数。"""
-
     def __init__(self, file_path):
         self.__文件列表 = [file_path]
         self.__扩展名_函数_字典 = {
@@ -52,7 +51,7 @@ class 解析器(object):
         self.__文件列表 = []
         for file_name in all_file_name_list:
             if file_name.endswith(file_ext):
-                self.__文件列表.append(cwd_dir+"\\"+file_name)
+                self.__文件列表.append(cwd_dir + "\\" + file_name)
 
     def __xac解析(self, file_path):
         烛龙文件 = core.xac.解析(file_path).烛龙文件
@@ -84,8 +83,8 @@ class 解析器(object):
             bpy.context.scene.collection.children.link(collection)
 
         blender28libs.armaturelib.Creat_Armature(烛龙文件)
-        blender28libs.materiallib.Creat_Material(
-            烛龙文件, 贴图转换=self.__bool_DDS_to_PNG)
+        blender28libs.materiallib.Creat_Material(烛龙文件,
+                                                 贴图转换=self.__bool_DDS_to_PNG)
         blender28libs.objectlib.Creat_Object(烛龙文件, 贴图转换=self.__bool_DDS_to_PNG)
         blender28libs.bindlib.Bind_Object_to_Armature(烛龙文件)
         blender28libs.actionlib.Creat_Action(烛龙文件)

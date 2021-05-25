@@ -7,7 +7,6 @@ from .. import core
 
 class Creat_Action():
     """Zhulong_Action_to_Blender_Actio"""
-
     def __init__(self, 烛龙文件=core.aurogon_type.烛龙文件()):
         if 烛龙文件.动作文件.名称 != "":
             self.__烛龙文件 = 烛龙文件
@@ -33,8 +32,8 @@ class Creat_Action():
             for i, name in enumerate(namelist):
                 if pbone.name in name:
                     骨骼动作 = self.__烛龙文件.动作文件.骨骼动作列表[i]
-                    沿x轴逆时针旋转90度 = mathutils.Quaternion(
-                        (1, 0, 0), math.radians(-180))
+                    沿x轴逆时针旋转90度 = mathutils.Quaternion((1, 0, 0),
+                                                       math.radians(-180))
                     for 旋转帧 in 骨骼动作.旋转帧列表:
                         if pbone.parent:
                             # pbone.rotation_quaternion = 旋转帧.rotation_quaternion.rotation_difference(pbone.parent.rotation_quaternion)
@@ -45,8 +44,8 @@ class Creat_Action():
                                 pbone.parent.rotation_quaternion)
                         else:
                             pbone.rotation_quaternion = 沿x轴逆时针旋转90度 @ 旋转帧.rotation_quaternion
-                        pbone.keyframe_insert(
-                            "rotation_quaternion", frame=旋转帧.frame)
+                        pbone.keyframe_insert("rotation_quaternion",
+                                              frame=旋转帧.frame)
 
                     # for 位置帧 in 骨骼动作.位置帧列表:
 

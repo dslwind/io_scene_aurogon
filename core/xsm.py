@@ -5,7 +5,6 @@ from . import aurogon_type, binary_analysis
 
 
 class 解析():
-
     def __init__(self, file_path):
         self.__file_path = file_path
         self.__数据准备()  # 实例化烛龙类型，建立1套骨架等
@@ -62,17 +61,17 @@ class 解析():
             for i in range(位置num):
                 位置帧 = aurogon_type.烛龙位置帧()
                 位置帧.location = mathutils.Vector(位置.readfloat32s(3))
-                位置帧.frame = int(round(位置.readfloat32()*30))
+                位置帧.frame = int(round(位置.readfloat32() * 30))
                 骨骼动作.位置帧列表.append(位置帧)
                 帧数集.add(位置帧.frame)
 
             for i in range(旋转num):
                 旋转帧 = aurogon_type.烛龙旋转帧()
-                四元数 = [x*2**-15 for x in 旋转.readuint16s(4)]
+                四元数 = [x * 2**-15 for x in 旋转.readuint16s(4)]
                 旋转帧.rotation_quaternion = mathutils.Quaternion(
                     [四元数[3], 四元数[0], 四元数[1], 四元数[2]])
                 # 旋转帧.rotation_quaternion=mathutils.Quaternion(四元数)
-                旋转帧.frame = int(round(旋转.readfloat32()*30))
+                旋转帧.frame = int(round(旋转.readfloat32() * 30))
                 骨骼动作.旋转帧列表.append(旋转帧)
                 帧数集.add(旋转帧.frame)
 

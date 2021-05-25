@@ -1,1 +1,2 @@
-from . import xac, xsm, vision_engine_file, avatar, gamebryo_engine_file, aurogon_type
+from . import (aurogon_type, avatar, gamebryo_engine_file, vision_engine_file,
+               xac, xsm)

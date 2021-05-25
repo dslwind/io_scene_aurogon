@@ -1,10 +1,8 @@
 import os
-
 import xml.etree.ElementTree as ET
 
 
 class 解析():
-
     def __init__(self, file_path):
         self.__file_path = file_path
         self.__数据准备()

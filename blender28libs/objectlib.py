@@ -5,7 +5,9 @@ from .. import core
 
 
 class Creat_Object():
-    def __init__(self, 烛龙文件=core.aurogon_type.烛龙文件(), 贴图转换=False):  # 烛龙骨架:烛龙数据.烛龙材质()
+    def __init__(self,
+                 烛龙文件=core.aurogon_type.烛龙文件(),
+                 贴图转换=False):  # 烛龙骨架:烛龙数据.烛龙材质()
 
         if len(烛龙文件.网格列表) > 0:
             self.__烛龙文件 = 烛龙文件

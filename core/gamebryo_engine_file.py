@@ -75,7 +75,9 @@ class NIF对象():
         self.flag = bp.readuint16()
         self.location = mathutils.Vector(bp.readfloat32s(3))
         self.rotation_matrix = mathutils.Matrix(
-            [bp.readfloat32s(3), bp.readfloat32s(3), bp.readfloat32s(3)]).to_4x4()
+            [bp.readfloat32s(3),
+             bp.readfloat32s(3),
+             bp.readfloat32s(3)]).to_4x4()
         self.scale = bp.readfloat32()
         self.rotation_quaternion = self.rotation_matrix.to_quaternion()
         self.matrix = None
@@ -98,7 +100,9 @@ class NIF对象():
         self.flag = bp.readuint16()
         self.location = mathutils.Vector(bp.readfloat32s(3))
         self.rotation_matrix = mathutils.Matrix(
-            [bp.readfloat32s(3), bp.readfloat32s(3), bp.readfloat32s(3)]).to_4x4()
+            [bp.readfloat32s(3),
+             bp.readfloat32s(3),
+             bp.readfloat32s(3)]).to_4x4()
         self.scale = bp.readfloat32()
         self.rotation_quaternion = self.rotation_matrix.to_quaternion()
         self.matrix = None
@@ -208,7 +212,9 @@ class NIF对象():
         self.根骨骼ID = bp.readuint32()
         self.父骨骼location = mathutils.Vector(bp.readfloat32s(3))
         self.父骨骼rotation_quaternion = mathutils.Matrix(
-            [bp.readfloat32s(3), bp.readfloat32s(3), bp.readfloat32s(3)]).to_quaternion()
+            [bp.readfloat32s(3),
+             bp.readfloat32s(3),
+             bp.readfloat32s(3)]).to_quaternion()
         self.父骨骼scale = bp.readfloat32()
         self.骨骼总数, self.骨骼ID列表 = self.读取链接(bp)
 
@@ -216,7 +222,9 @@ class NIF对象():
         for i in range(self.骨骼总数):
             location = mathutils.Vector(bp.readfloat32s(3))
             rotation_quaternion = mathutils.Matrix(
-                [bp.readfloat32s(3), bp.readfloat32s(3), bp.readfloat32s(3)]).to_quaternion()
+                [bp.readfloat32s(3),
+                 bp.readfloat32s(3),
+                 bp.readfloat32s(3)]).to_quaternion()
             scale = bp.readfloat32()
             self.骨骼_loca_quat_scal_列表.append(
                 [location, rotation_quaternion, scale])
@@ -310,7 +318,7 @@ class NIF对象():
 
                 xrlist, yrlist, zrlist = xyz
                 max帧数 = max(帧数集)
-                for m in range(max帧数+1):
+                for m in range(max帧数 + 1):
                     quat_a, quat_b, quat_c = None, None, None
                     for frame, xr in xrlist:
                         if frame == m:
@@ -395,7 +403,6 @@ class NIF对象():
 
 
 class 解析():
-
     def __init__(self, file_path):
         self.__file_path = file_path
         self.__数据准备()  # 实例化烛龙类型，建立1套骨架等
@@ -475,7 +482,7 @@ class 解析():
                 骨骼.头位置 = nif对象.matrix @ mathutils.Vector([0, 0, 0])
                 bvec = mathutils.Vector([0, 0, 0]) - 骨骼.头位置
                 bvec.normalize()
-                骨骼.尾位置 = 骨骼.头位置 + 1.5*bvec
+                骨骼.尾位置 = 骨骼.头位置 + 1.5 * bvec
                 self.烛龙文件.骨架.骨骼列表.append(骨骼)
 
                 for i in nif对象.子连接ID列表:
@@ -510,8 +517,8 @@ class 解析():
             NiNode.matrix = fnif对象.matrix @ mat_out
 
     # ======================================================================
-        # NiMesh methods
-        # ======================================================================
+    # NiMesh methods
+    # ======================================================================
     def __NiMesh处理(self, NiMesh):
         材质 = aurogon_type.烛龙材质()
         for ID in NiMesh.节点属性ID列表:
@@ -580,7 +587,7 @@ class 解析():
             网格.父对象名称 = NiMesh.父对象名称
             if "TEXCOORD0" + str(i) in 描述_数据_字典:
                 网格.Loop总数 = len(描述_数据_字典["INDEX0" + str(i)])
-                网格.三角面数 = int(网格.Loop总数/3)
+                网格.三角面数 = int(网格.Loop总数 / 3)
                 网格.Loop列表 = 描述_数据_字典["INDEX0" + str(i)]
 
                 网格.顶点个数 = len(描述_数据_字典["TEXCOORD0" + str(i)])
@@ -626,7 +633,8 @@ class 解析():
                         旋转帧 = aurogon_type.烛龙旋转帧()
                         旋转帧.frame = frame
                         旋转帧.rotation_quaternion = mathutils.Quaternion(
-                            quaternion)  # @ mathutils.Quaternion(nif对象.quaternion)
+                            quaternion
+                        )  # @ mathutils.Quaternion(nif对象.quaternion)
                         骨骼动作.旋转帧列表.append(旋转帧)
 
                     for frame, location in NiTransformData.frame_location_列表:
@@ -689,6 +697,7 @@ class 解析():
                     顶点ID_权重值.顶点ID, 顶点ID_权重值.权重值 = i, 1.0
                     顶点组.顶点ID和权重值列表.append(顶点ID_权重值)
                 网格.顶点组列表.append(顶点组)
+
 
 # ['INDEX', 0]
 # ['TEXCOORD', 0]
@@ -757,7 +766,6 @@ class 解析():
 # NiDataStream╔3╔3
 # NiSkinningMeshModifier
 # NiAmbientLight
-
 
 # NiSequenceData
 # NiConstFloatEvaluator

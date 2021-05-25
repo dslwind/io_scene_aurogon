@@ -1,1 +1,1 @@
-from . import armaturelib, actionlib, objectlib, materiallib, bindlib
+from . import actionlib, armaturelib, bindlib, materiallib, objectlib
